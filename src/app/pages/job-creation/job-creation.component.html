@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>
+        <i class="fas fa-clipboard-list"></i> Cadastrar vaga
+      </h1>
+    </div>
+  </div>
+
+  <form [formGroup]="form">
+    <div class="row mt-4">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            Área
+            <button class="btn btn-link p-0 float-right" (click)="addDetails('areas')"><i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-check" *ngFor="let area of storedDetails.areas">
+              <input class="form-check-input" type="radio" [id]="area" [checked]="selectedArea.value === area" [value]="area" (click)="selectedArea.setValue(area)">
+              <label class="form-check-label" [htmlFor]="area">
+                {{area}}
+              </label>
+            </div>
+            <div class="text-center" *ngIf="!storedDetails.areas">Nenhuma área adicionada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            Vaga
+            <button class="btn btn-link p-0 float-right" (click)="addDetails('vagas')"><i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-check" *ngFor="let vaga of storedDetails.vagas">
+              <input class="form-check-input" type="radio" [id]="vaga" [checked]="selectedVaga.value === vaga"
+                     [value]="vaga" (click)="selectedVaga.setValue(vaga)">
+              <label class="form-check-label" [htmlFor]="vaga">
+                {{vaga}}
+              </label>
+            </div>
+            <div class="text-center" *ngIf="!storedDetails.vagas">Nenhuma vaga adicionada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            Local
+            <button class="btn btn-link p-0 float-right" (click)="addDetails('locais')"><i class="fa fa-plus"></i>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-check" *ngFor="let local of storedDetails.locais">
+              <input class="form-check-input" type="radio" [id]="local" [checked]="selectedLocal.value === local"
+                     [value]="local" (click)="selectedLocal.setValue(local)">
+              <label class="form-check-label" [htmlFor]="local">
+                {{local}}
+              </label>
+            </div>
+            <div class="text-center" *ngIf="!storedDetails.locais">Nenhum local adicionado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row mt-4">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Benefícios
+          <button class="btn btn-link p-0 float-right" (click)="addDetails('beneficios')"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="form-check" *ngFor="let item of beneficiosKey | keyvalue: defaultSortFunction">
+            <input class="form-check-input" type="checkbox" [id]="item.key" [ngModel]="item.value.checked"
+                   (ngModelChange)="selectBeneficios($event, item.key)">
+            <label class="form-check-label">
+              {{item.value.label}}
+            </label>
+          </div>
+          <div class="text-center" *ngIf="!storedDetails.beneficios">Nenhum benefício adicionado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">
+          Competências
+          <button class="btn btn-link p-0 float-right" (click)="addDetails('competencias')"><i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="form-check-inline" *ngFor="let item of competenciasKey | keyvalue: defaultSortFunction">
+            <input class="form-check-input" type="checkbox" [id]="item.key" [ngModel]="item.value.checked"
+                   (ngModelChange)="selectCompetencias($event, item.key)">
+            <label class="form-check-label">
+              {{item.value.label}}
+            </label>
+          </div>
+          <div class="text-center" *ngIf="!storedDetails.competencias">Nenhuma competência adicionada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">
+          Carga horária
+        </div>
+        <div class="card-body text-center">
+          <div class="form-check-inline" *ngFor="let item of weekDays | keyvalue: defaultSortFunction">
+            <input class="form-check-input" type="checkbox" [id]="item.key" [ngModel]="item.value.checked"
+                   (ngModelChange)="selectDays($event, item.key)">
+            <label class="form-check-label">
+              {{item.value.day}}
+            </label>
+          </div>
+          <div class="mt-2 text-center">
+            <input type="time" [formControl]="startTime">
+            <span class="mx-4">às</span>
+            <input type="time" [formControl]="endTime">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">
+          Duração da vaga
+        </div>
+        <div class="card-body">
+          <div class="text-center">
+            <span class="mr-4">De</span>
+            <input type="date" [formControl]="startDay">
+            <span class="mx-4">Até</span>
+            <input type="date" [formControl]="endDay">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12 text-right">
+      <div class="btn-group">
+        <button class="btn btn-success" (click)="create()">
+          <i class="fa fa-plus"></i> Cadastrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

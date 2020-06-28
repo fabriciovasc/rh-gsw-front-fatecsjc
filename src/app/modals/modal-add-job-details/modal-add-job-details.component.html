@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar {{JobDetailsName[jobDetail]}}</h5>
+  <button type="button" class="close" (click)="bsModalRef.hide()">
+    <i class="fa fa-close"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="d-flex justify-content-between mb-2" *ngFor="let detail of details; let index = index">
+    <span>{{index + 1}} - {{detail}}</span>
+    <button class="p-0 btn btn-link text-danger" (click)="details.splice(index, 1)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </div>
+
+  <div class="input-group mb-3">
+    <input [formControl]="detail" type="text" class="form-control" placeholder="Adicione um novo...">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="addDetail()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+    <i class="fa fa-times"></i>
+    Cancelar
+  </button>
+
+  <button type="button" class="btn btn-success" (click)="saveDetails()">
+    <i class="fa fa-save"></i>
+    Salvar
+  </button>
+</div>
