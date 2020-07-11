@@ -26,7 +26,7 @@ export class JobService {
   }
 
   create(job: Job): Observable<Job> {
-    return this.http.post<Job>(this.endPoint + '/vagas', JSON.stringify(job), this.httpOptions);
+    return this.http.post<Job>(this.endPoint + '/vagas', job, this.httpOptions);
   }
 
   // update(condoId: string, vehicleId: string, vehicle: any) {
@@ -36,6 +36,5 @@ export class JobService {
   // delete(condoId: string, vehicleId: string) {
   //   return this.http.delete(this.endPoint + condoId + '/vehicles/' + vehicleId);
   // }
-
 
 }

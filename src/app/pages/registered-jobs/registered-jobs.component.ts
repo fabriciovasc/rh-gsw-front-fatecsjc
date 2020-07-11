@@ -3,6 +3,7 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {Status} from '../../api/model/status';
 import {JobService} from '../../api/service/job.service';
 import {timeout} from 'rxjs/operators';
+import {Job} from '../../api/model/job';
 
 @Component({
   selector: 'app-registered-jobs',
@@ -11,7 +12,7 @@ import {timeout} from 'rxjs/operators';
 })
 export class RegisteredJobsComponent implements OnInit {
 
-  jobs;
+  jobs: Job[] = [];
 
   loadStatus: Status = new Status();
 

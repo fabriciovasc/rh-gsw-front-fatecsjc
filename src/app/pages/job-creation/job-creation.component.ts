@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {ModalAddJobDetailsComponent} from '../../modals/modal-add-job-details/modal-add-job-details.component';
-import {JobDetails} from '../../api/model/job-details';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {KeyValue} from '@angular/common';
-import {WEEK_DAYS, WEEK_DAYS_SHORT} from '../../api/util/constants';
+import {WEEK_DAYS_SHORT} from '../../api/util/constants';
 import {defaultSortFunction} from '../../api/util/util';
-import {Job} from '../../api/model/job';
 import {Status} from '../../api/model/status';
 import {JobService} from '../../api/service/job.service';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
+import {Job} from '../../api/model/job';
 
 @Component({
   selector: 'app-job-creation',
@@ -49,6 +49,8 @@ export class JobCreationComponent implements OnInit {
 
   constructor(private modalService: BsModalService,
               private formBuilder: FormBuilder,
+              public toastrService: ToastrService,
+              public router: Router,
               private jobService: JobService) {
 
   }
@@ -111,31 +113,23 @@ export class JobCreationComponent implements OnInit {
   create() {
     if (this.form.valid) {
       this.loadStatus.setAsProcessing();
-      /* Esperando atualização do backend */
-      // const job: any = {
-      //   area: this.selectedArea.value,
-      //   vaga: this.selectedVaga.value,
-      //   local: this.selectedLocal.value,
-      //   beneficios: this.selectedBeneficios,
-      //   competencias: this.selectedCompetencias,
-      //   diasSelecionados: this.selectedWeekDays,
-      //   horarioInicio: this.startTime.value,
-      //   horarioFim: this.endTime.value,
-      //   diaInicioVaga: this.startDay.value,
-      //   diaFimVaga: this.endDay.value
-      // };
 
-      const job: any = {
+      const job: Job = {
         area: this.selectedArea.value,
-        objetivo: 'Valor teste',
-        requerido: 'Valor teste',
-        experiencia: 1
+        vaga: this.selectedVaga.value,
+        local: this.selectedLocal.value,
+        beneficios: JSON.stringify(this.selectedBeneficios),
+        competencias: JSON.stringify(this.selectedCompetencias),
+        cargaHoraria: 16,
+        inicioVaga: this.startDay.value,
+        fimVaga: this.endDay.value
       };
 
-      /* Esperando atualização do backend */
-      // this.jobService.create(job).subscribe(data => {
-      //   console.log(data)
-      // });
+      console.log(job)
+
+      this.jobService.create(job).subscribe(data => {
+        console.log(data);
+      });
     }
   }
 

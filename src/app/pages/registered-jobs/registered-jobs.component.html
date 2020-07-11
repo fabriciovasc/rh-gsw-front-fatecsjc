@@ -20,6 +20,13 @@
         </tr>
         </thead>
         <tbody>
+        <tr *ngFor="let job of jobs; let index = index">
+          <th scope="col">{{job.id}}</th>
+          <td>{{job.area}}</td>
+          <td>{{job.objetivo}}</td>
+          <td>{{job.requerido}}</td>
+          <td>{{job.experiencia === 1 ? 'Sim' : 'Não'}}</td>
+        </tr>
         </tbody>
       </table>
     </div>

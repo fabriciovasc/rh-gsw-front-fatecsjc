@@ -34,7 +34,10 @@ import {CommonModule} from '@angular/common';
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      maxOpened: 3,
+      preventDuplicates: true
+    }),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
