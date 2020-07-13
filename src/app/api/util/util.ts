@@ -63,3 +63,7 @@ export const defaultSortFunction = (akv: KeyValue<string, any>, bkv: KeyValue<st
   return 0;
 };
 
+export const exportStringToArray = (value) => {
+  return JSON.parse(value);
+};
+

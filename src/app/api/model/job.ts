@@ -8,7 +8,9 @@ export class Job {
   cargaHoraria?: number;
   inicioVaga?: string;
   fimVaga?: string;
-  candidatos?: string;
+  inscritos?: string;
+  selecionados?: string;
+  aprovados?: string;
 
   constructor(job) {
     if (typeof job === 'number') {
@@ -23,7 +25,9 @@ export class Job {
       this.cargaHoraria = job.cargaHoraria || '';
       this.inicioVaga = job.inicioVaga || '';
       this.fimVaga = job.fimVaga || '';
-      this.candidatos = job.candidatos || '';
+      this.inscritos = job.inscritos || '';
+      this.selecionados = job.selecionados || '';
+      this.aprovados = job.aprovados || '';
     }
   }
 }

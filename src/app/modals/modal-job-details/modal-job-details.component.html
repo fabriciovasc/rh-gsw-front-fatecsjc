@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <h4 class="modal-title">Gerenciar candidatos da vaga</h4>
+  <button type="button" class="close" (click)="bsModalRef.hide()">
+    <i class="fa fa-close"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="row mb-3">
+    <div class="col-4">
+      <span class="font-weight-bold">Área:</span> {{job.area}}
+    </div>
+    <div class="col-4">
+      <span class="font-weight-bold">Vaga:</span> {{job.vaga}}
+    </div>
+    <div class="col-4">
+      <span class="font-weight-bold">Local:</span> {{job.local}}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-4">
+      <span class="font-weight-bold">Carga horária:</span> {{job.cargaHoraria}} horas
+    </div>
+    <div class="col-4">
+      <span class="font-weight-bold">Criado em:</span> {{job.inicioVaga | date: 'dd/MM/yyyy'}}
+    </div>
+    <div class="col-4">
+      <span class="font-weight-bold">Finaliza em:</span> {{job.fimVaga | date: 'dd/MM/yyyy'}}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-6">
+      <span class="font-weight-bold">Benefícios: </span>
+      <p class="m-0" *ngFor="let beneficio of exportToArray(job.beneficios); let index = index">{{index + 1}}
+        - {{beneficio}}</p>
+    </div>
+    <div class="col-6 text-right">
+      <span class="font-weight-bold">Competências: </span>
+      <p class="m-0" *ngFor="let comp of exportToArray(job.competencias); let index = index">{{index + 1}}
+        - {{comp}}</p>
+    </div>
+  </div>
+
+  <div cdkDropListGroup class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Inscritos
+        </div>
+        <div class="card-body">
+          <div
+            cdkDropList
+            [cdkDropListData]="inscritos"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let inscrito of inscritos" cdkDrag>{{inscrito}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Selecionados
+        </div>
+        <div class="card-body">
+          <div
+            cdkDropList
+            [cdkDropListData]="selecionados"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let selecionado of selecionados" cdkDrag>{{selecionado}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Aprovados
+        </div>
+        <div class="card-body">
+          <div
+            cdkDropList
+            [cdkDropListData]="aprovados"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let aprovado of aprovados" cdkDrag>{{aprovado}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+    <i class="fa fa-times"></i>
+    Cancelar
+  </button>
+
+  <button type="button" class="btn btn-success" (click)="save()">
+    <i class="fa fa-save"></i>
+    Salvar
+  </button>
+</div>

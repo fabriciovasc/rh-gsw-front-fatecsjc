@@ -5,10 +5,10 @@ import {JobDetailsName} from '../../api/model/job-details';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  templateUrl: 'modal-add-job-details.component.html',
-  styleUrls: ['modal-add-job-details.component.scss']
+  templateUrl: 'modal-add-create-job-details.component.html',
+  styleUrls: ['modal-add-create-job-details.component.scss']
 })
-export class ModalAddJobDetailsComponent implements OnInit {
+export class ModalAddCreateJobDetailsComponent implements OnInit {
 
   jobDetail: string;
   storedDetails: Array<string>;
@@ -56,6 +56,7 @@ export class ModalAddJobDetailsComponent implements OnInit {
       if (this.callbacks && this.callbacks.success) {
         this.callbacks.success();
       }
+      this.toastrService.success('Detalhes cadastrados com sucesso');
       this.bsModalRef.hide();
     } else {
       console.log('aa')

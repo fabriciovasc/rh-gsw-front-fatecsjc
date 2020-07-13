@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row jumbotron">
+    <div class="col-12 text-center">
+      <img class="gsw-logo mb-4" src="assets/img/logo-gsw-en.svg">
+
+      <p> A GSW é especializada em desenvolvimento e implantação de soluções inteligentes em Tecnologia da Informação
+        para gestão empresarial, gestão tributária, operações em comércio exterior e CRM.
+        Com 25 anos de experiência em projetos globais de TI e mais de 400 colaboradores espalhados por 6 unidades, a
+        GSW oferece portfólio abrangente, construído através de sólidas alianças com empresas de soluções globais em TI,
+        como Thomson Reuters, SAP, Microsoft, IBM, Oracle e Salesforce.
+        A GSW tem maturidade para atender praticamente todas as demandas de seus clientes, desde desenvolvimento de
+        software, implantação de ERP e sistemas satélites, até alocação de profissionais técnicos e funcionais.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>Faça parte da nossa equipe!</h4>
+      <p>Estamos a procura de pessoas para a área de {{job?.area || 'Não informado'}} que contribuirá para o desenvolvimento da GSW.</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>Descrição</h4>
+      <p>Este profissional trabalhará como {{job?.vaga || 'Não informado'}}.</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>Competências obrigatórias</h4>
+      <ul class="list-group list-group-flush list-group-horizontal">
+        <li class="list-group-item" *ngFor="let comp of exportToArray(job?.competencias)"><i class="fa fa-check"></i> {{comp}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>Benefícios</h4>
+      <ul class="list-group list-group-flush list-group-horizontal">
+        <li class="list-group-item" *ngFor="let beneficio of exportToArray(job?.beneficios)"><i class="fa fa-check"></i> {{beneficio}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>Carga horária</h4>
+      <p>O profissional trabalhará {{job?.cargaHoraria || 'Não informado'}} horas por dia.</p>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-12">
+      <button class="btn btn-success btn-lg btn-block" (click)="applyFor()">Quero me candidatar!</button>
+    </div>
+  </div>
+
+
+</div>

@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalService} from 'ngx-bootstrap/modal';
-import {ModalAddJobDetailsComponent} from '../../modals/modal-add-job-details/modal-add-job-details.component';
+import {ModalAddCreateJobDetailsComponent} from '../../../modals/modal-add-create-job-details/modal-add-create-job-details.component';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {WEEK_DAYS_SHORT} from '../../api/util/constants';
-import {defaultSortFunction} from '../../api/util/util';
-import {Status} from '../../api/model/status';
-import {JobService} from '../../api/service/job.service';
+import {WEEK_DAYS_SHORT} from '../../../api/util/constants';
+import {defaultSortFunction} from '../../../api/util/util';
+import {Status} from '../../../api/model/status';
+import {JobService} from '../../../api/service/job.service';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
-import {Job} from '../../api/model/job';
+import {Job} from '../../../api/model/job';
 
 @Component({
   selector: 'app-job-creation',
@@ -23,23 +23,12 @@ export class JobCreationComponent implements OnInit {
   selectedArea: AbstractControl;
   selectedVaga: AbstractControl;
   selectedLocal: AbstractControl;
-  startTime: AbstractControl;
-  endTime: AbstractControl;
+  cargaHoraria: AbstractControl;
   startDay: AbstractControl;
   endDay: AbstractControl;
 
   defaultSortFunction = defaultSortFunction;
 
-  weekDays = {
-    SUNDAY: {day: WEEK_DAYS_SHORT.SUNDAY, checked: false},
-    MONDAY: {day: WEEK_DAYS_SHORT.MONDAY, checked: false},
-    TUESDAY: {day: WEEK_DAYS_SHORT.TUESDAY, checked: false},
-    WEDNESDAY: {day: WEEK_DAYS_SHORT.WEDNESDAY, checked: false},
-    THURSDAY: {day: WEEK_DAYS_SHORT.THURSDAY, checked: false},
-    FRIDAY: {day: WEEK_DAYS_SHORT.FRIDAY, checked: false},
-    SATURDAY: {day: WEEK_DAYS_SHORT.SATURDAY, checked: false},
-  };
-  selectedWeekDays = [];
   beneficiosKey: any = {};
   selectedBeneficios = [];
   competenciasKey: any = {};
@@ -65,17 +54,15 @@ export class JobCreationComponent implements OnInit {
       selectedArea: ['', Validators.required],
       selectedVaga: ['', Validators.required],
       selectedLocal: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
       startDay: ['', Validators.required],
-      endDay: ['', Validators.required]
+      endDay: ['', Validators.required],
+      cargaHoraria: [0, Validators.required]
     });
 
     this.selectedArea = this.form.get('selectedArea');
     this.selectedVaga = this.form.get('selectedVaga');
     this.selectedLocal = this.form.get('selectedLocal');
-    this.startTime = this.form.get('startTime');
-    this.endTime = this.form.get('endTime');
+    this.cargaHoraria = this.form.get('cargaHoraria');
     this.startDay = this.form.get('startDay');
     this.endDay = this.form.get('endDay');
   }
@@ -107,7 +94,7 @@ export class JobCreationComponent implements OnInit {
         }
       }
     };
-    this.modalService.show(ModalAddJobDetailsComponent, {initialState, class: 'modal-sm'});
+    this.modalService.show(ModalAddCreateJobDetailsComponent, {initialState, class: 'modal-sm', ignoreBackdropClick: true});
   }
 
   create() {
@@ -120,30 +107,18 @@ export class JobCreationComponent implements OnInit {
         local: this.selectedLocal.value,
         beneficios: JSON.stringify(this.selectedBeneficios),
         competencias: JSON.stringify(this.selectedCompetencias),
-        cargaHoraria: 16,
+        cargaHoraria: this.cargaHoraria.value,
         inicioVaga: this.startDay.value,
         fimVaga: this.endDay.value
       };
 
-      console.log(job)
-
       this.jobService.create(job).subscribe(data => {
-        console.log(data);
+        this.loadStatus.setAsSuccess();
+        this.toastrService.success('Vaga criada com sucesso!', 'Sucesso');
+        this.router.navigate(['rh', 'registered-jobs']);
+      }, error => {
+        console.log(error)
       });
-    }
-  }
-
-  selectDays(checked, day) {
-    this.weekDays[day].checked = checked;
-    this.weekDays = {...this.weekDays};
-
-    const selectedDay = this.weekDays[day].day;
-    const index = this.selectedWeekDays.indexOf(selectedDay);
-
-    if (!checked) {
-      this.selectedWeekDays.splice(index, 1);
-    } else {
-      this.selectedWeekDays.push(selectedDay);
     }
   }
 

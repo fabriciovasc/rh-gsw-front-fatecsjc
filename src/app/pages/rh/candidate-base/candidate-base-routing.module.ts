@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ModalAddJobDetailsComponent} from './modal-add-job-details.component';
+import {CandidateBaseComponent} from './candidate-base.component';
 
 const routes: Routes = [
-  {path: '', component: ModalAddJobDetailsComponent, canActivate: []}
+  {path: '', component: CandidateBaseComponent, canActivate: []}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ModalAddJobDetailsRoutingModule {
+export class CandidateBaseRoutingModule {
 }

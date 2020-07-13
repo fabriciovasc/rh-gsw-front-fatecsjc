@@ -1,0 +1,92 @@
+<div class="modal-header">
+  <h5 class="modal-title">Processo de inscrição para a vaga de {{selectedJob.vaga}}</h5>
+  <button type="button" class="close" (click)="bsModalRef.hide()">
+    <i class="fa fa-close"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="d-flex justify-content-center" *ngIf="loadStatus.isProcessing()">
+    <div class="spinner-border" role="status"></div>
+  </div>
+
+  <div class="first-step" *ngIf="firstStep">
+    <label>Insira seu CPF para continuar</label>
+    <input type="text" class="form-control" placeholder="000.000.000-00" aria-label="CPF" [formControl]="searchCpf">
+  </div>
+
+  <div class="second-step" *ngIf="secondStep">
+    <form [formGroup]="registerForm">
+      <div class="row mb-3">
+        <div class="col-6">
+          <label>Nome completo</label>
+          <input type="text" class="form-control" placeholder="Bill Gates" aria-label="Nome completo" [formControl]="nome">
+        </div>
+        <div class="col-6">
+          <label>CPF</label>
+          <input type="text" class="form-control" placeholder="000.000.000-00" aria-label="Nome completo" [formControl]="cpf">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-4">
+          <label>Rua</label>
+          <input type="text" class="form-control" placeholder="Rua da GSW" aria-label="Rua" [formControl]="rua">
+        </div>
+        <div class="col-2">
+          <label>Número</label>
+          <input type="text" class="form-control" placeholder="25" aria-label="Rua" [formControl]="numero">
+        </div>
+        <div class="col-6">
+          <label>Bairro</label>
+          <input type="text" class="form-control" placeholder="Jardim Primavera" aria-label="Bairro" [formControl]="bairro">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6">
+          <label>Cidade</label>
+          <input type="text" class="form-control" placeholder="São José dos Campos" aria-label="Cidade" [formControl]="cidade">
+        </div>
+        <div class="col-6">
+          <label>E-mail</label>
+          <input type="text" class="form-control" placeholder="bill@gates.com" aria-label="E-mail" [formControl]="email">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-6">
+          <label>Objetivo</label>
+          <textarea class="form-control" placeholder="Descreva sobre seu objetivo na empresa" aria-label="Objetivo" [formControl]="objetivo"></textarea>
+        </div>
+        <div class="col-6">
+          <label>Formação</label>
+          <textarea class="form-control" placeholder="Descreva brevemente sua formação" aria-label="Formação" [formControl]="formacao"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label>Competências</label>
+          <textarea class="form-control" placeholder="Descreva sobre suas competências" aria-label="Competências" [formControl]="competencias"></textarea>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="bsModalRef.hide()">
+    <i class="fas fa-times"></i>
+    Fechar
+  </button>
+  <button type="button" class="btn btn-success" *ngIf="firstStep" (click)="getCandidate()">
+    Continuar
+    <i class="fas fa-arrow-right"></i>
+  </button>
+  <button type="button" class="btn btn-success" *ngIf="secondStep" (click)="registerCandidate()">
+    <i class="fas fa-check"></i>
+    Cadastrar
+  </button>
+</div>
